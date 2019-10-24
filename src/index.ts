@@ -13,7 +13,7 @@ export const parseResult = new Parser(tokenResult.tokens).parse();
 console.log(parseResult);
 
 // Lint parser
-import { Linter } from './linter';
+import { Linter, TypeCollector } from './linter';
 import * as lintParser from './linter/rules/parser';
 
 console.log(new Linter(
@@ -36,6 +36,12 @@ console.log(new Linter(
   lintDeclarations,
   scope,
 ).lint());
+
+// Collect types
+export const typedScope = new ProgramScope(parseResult.ast);
+typedScope.build();
+new TypeCollector(typedScope).collect();
+console.log(typedScope);
 
 // Export everything
 export const code = program;

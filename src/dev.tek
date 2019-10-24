@@ -1,27 +1,2 @@
-new Class()
-
-new Class(
-)
-
-new
-Class()
-
-new
-Class(
-)
-
-new Class
-()
-
-new Class
-(
-)
-
-new
-Class
-()
-
-new
-Class
-(
-)
+var x = 5
+var y = 'test'

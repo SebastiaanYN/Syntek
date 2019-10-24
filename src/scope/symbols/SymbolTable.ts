@@ -4,9 +4,9 @@ import { FunctionDeclaration, EmptyFunctionDeclaration } from '../../grammar';
 type Func = FunctionDeclaration | EmptyFunctionDeclaration;
 
 export class SymbolTable {
-  private readonly symbols = new Map<string, SymbolEntry>();
+  readonly symbols = new Map<string, SymbolEntry>();
 
-  private readonly functions = new Map<string, Func[]>();
+  readonly functions = new Map<string, Func[]>();
 
   get(name: string): SymbolEntry | undefined {
     return this.symbols.get(name);

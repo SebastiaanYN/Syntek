@@ -1,5 +1,6 @@
+import { Node } from '../../grammar';
 import { Scope } from '../scopes/Scope';
-import { Node, VariableType } from '../../grammar';
+import { SymbolType } from './SymbolType';
 
 export class SymbolEntry {
   readonly node: Node;
@@ -8,15 +9,14 @@ export class SymbolEntry {
 
   readonly refs: Node[] = [];
 
-  private type?: VariableType;
+  private type?: SymbolType;
 
-  constructor(node: Node, scope: Scope, type?: VariableType) {
+  constructor(node: Node, scope: Scope) {
     this.node = node;
     this.scope = scope;
-    this.type = type;
   }
 
-  getType(): Node {
+  getType(): SymbolType {
     if (this.type) {
       return this.type;
     }
@@ -24,11 +24,15 @@ export class SymbolEntry {
     throw new Error('Type is not set');
   }
 
-  setType(type: VariableType): void {
+  setType(type: SymbolType): void {
     if (this.type) {
       throw new Error('Can not change type');
     }
 
     this.type = type;
+  }
+
+  hasType(): boolean {
+    return !!this.type;
   }
 }

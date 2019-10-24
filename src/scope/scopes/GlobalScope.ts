@@ -3,7 +3,7 @@ import * as grammar from '../../grammar';
 import { Scope } from './Scope';
 import { SymbolEntry } from '../symbols/SymbolEntry';
 
-export class GlobalScope extends Scope {
+export class GlobalScope extends Scope<grammar.NativeNode> {
   constructor() {
     super(new grammar.NativeNode());
 
@@ -29,7 +29,7 @@ export class GlobalScope extends Scope {
       'Error',
       'Promise',
     ].forEach((builtin) => {
-      this.symbols.add(builtin, new SymbolEntry(new grammar.NativeNode(), this));
+      this.table.add(builtin, new SymbolEntry(new grammar.NativeNode(), this));
     });
   }
 }

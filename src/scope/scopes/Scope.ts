@@ -9,16 +9,16 @@ import { SymbolEntry } from '../symbols/SymbolEntry';
 
 import { mangleFunctionName } from '../mangle';
 
-export abstract class Scope {
-  readonly node: grammar.Node;
+export abstract class Scope<T extends grammar.Node = grammar.Node> {
+  readonly node: T;
 
   readonly parent?: Scope;
 
-  protected readonly symbols = new SymbolTable();
+  readonly table = new SymbolTable();
 
-  protected readonly scopes = new Map<grammar.Node, Scope>();
+  readonly scopes = new Map<grammar.Node, Scope>();
 
-  constructor(node: grammar.Node, parent?: Scope) {
+  constructor(node: T, parent?: Scope) {
     this.node = node;
     this.parent = parent;
   }
@@ -60,11 +60,11 @@ export abstract class Scope {
   }
 
   getOwnSymbol(name: string): SymbolEntry | undefined {
-    return this.symbols.get(name);
+    return this.table.get(name);
   }
 
   hasOwnSymbol(name: string): boolean {
-    return this.symbols.has(name);
+    return this.table.has(name);
   }
 
   hasFunction(name: string): boolean {
@@ -80,10 +80,10 @@ export abstract class Scope {
   }
 
   hasOwnFunction(name: string): boolean {
-    return this.symbols.hasFunction(name);
+    return this.table.hasFunction(name);
   }
 
-  protected add(node: grammar.Node, table: SymbolTable = this.symbols): void {
+  protected add(node: grammar.Node, table: SymbolTable = this.table): void {
     switch (node.type) {
       // Declarations
       case grammar.SyntacticToken.EMPTY_VARIABLE_DECL: {
